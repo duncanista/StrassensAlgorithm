@@ -1,4 +1,5 @@
 # coded by duncanista / Jordan Gonzalez Bustamante
+#          eduardogallegos / Eduardo Gallegos
 
 def getMatrix(path):
     file = open(path, 'r').read().splitlines()
@@ -98,7 +99,7 @@ m2 = getMatrix('16-2.txt')
 if(getMatrixOrder(m1) == getMatrixOrder(m2)):
     print(toString(strassenMethod(m1,m2)))
 else:
-    pass
+    print("Matrices do not have the same order")
 
 
 
