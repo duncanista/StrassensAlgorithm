@@ -95,9 +95,17 @@ def strassenMethod(a,b):
                 c[i + size][j + size] = c22[i][j]
         return c
 
+def bookMethod(a,b):
+    c = generateMatrix(getMatrixOrder(a))
+    for i in range(getMatrixOrder(a)):
+        for k in range(len(b[0])):
+            for j in range(len(b[0])):
+                c[i][j] += a[i][k] * b[k][j]
+    return c
+
 def actionButton():
     multiplications()
-    closeWindow()
+    #closeWindow()
 
 def multiplications():
     file1 = filedialog.askopenfilename(filetypes=(("Text files", "*.txt"), ("all files", "*.*")))
@@ -105,11 +113,14 @@ def multiplications():
     #messagebox.showinfo("Resultado", "El resultado se muestra en consola")
     m1 = getMatrix(file1)
     m2 = getMatrix(file2)
-    if (getMatrixOrder(m1) == getMatrixOrder(m2)):
+
+    if (getMatrixOrder(m1) == len(m2[0])):
         print(toString(strassenMethod(m1, m2)))
-        etiqueta6 = Label
+        print(toString(bookMethod(m1,m2)))
+        etiqueta6 = Label(ventana, text=toString(strassenMethod(m1, m2)))
+        etiqueta6.grid(column=0, row=6)
     else:
-        pass
+        print("Te equivocaste, ingresa matrices del mismo tamaño")
 
 def closeWindow():
     ventana.destroy()
