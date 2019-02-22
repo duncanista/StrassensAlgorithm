@@ -1,4 +1,4 @@
-# coded by duncanista / Jordan Gonzalez Bustamante
+# coded by duncanista / Jordan Gonzalez
 #          eduardogallegos / Eduardo Gallegos
 
 def getMatrix(path):

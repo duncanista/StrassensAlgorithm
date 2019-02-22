@@ -1,6 +1,8 @@
+# coded by duncanista / Jordan Gonzalez
+#          eduardogallegos / Eduardo Gallegos
+
 from tkinter import *
 from tkinter import filedialog
-from tkinter import messagebox
 
 def getMatrix(path):
     file = open(path, 'r').read().splitlines()
@@ -42,9 +44,9 @@ def strassenMethod(a,b):
     if(order <= 2):
         c = generateMatrix(order)
         for i in range(order):
-            for k in range(order):
-                for j in range(order):
-                    c[i][j] += a[i][k] * b[k][j]
+            for j in range(order):
+                for k in range(order):
+                    c[i][k] += a[i][j] * b[j][k]
         return c
     else:
         # dividing matrixC
@@ -98,9 +100,9 @@ def strassenMethod(a,b):
 def bookMethod(a,b):
     c = generateMatrix(getMatrixOrder(a))
     for i in range(getMatrixOrder(a)):
-        for k in range(len(b[0])):
-            for j in range(len(b[0])):
-                c[i][j] += a[i][k] * b[k][j]
+        for j in range(len(b[0])):
+            for k in range(len(b[0])):
+                c[i][k] += a[i][j] * b[j][k]
     return c
 
 def actionButton():
@@ -118,7 +120,9 @@ def multiplications():
         print(toString(strassenMethod(m1, m2)))
         print(toString(bookMethod(m1,m2)))
         etiqueta6 = Label(ventana, text=toString(strassenMethod(m1, m2)))
+        etiqueta7 = Label(ventana, text="En la consola se muestran los dos procesos por ambos métodos, strassen y textbook")
         etiqueta6.grid(column=0, row=6)
+        etiqueta7.grid(column=0, row=8)
     else:
         print("Te equivocaste, ingresa matrices del mismo tamaño")
 
@@ -127,7 +131,7 @@ def closeWindow():
 
 ventana = Tk()
 ventana.title("Multiplicación de matrices")
-ventana.geometry('725x600')
+ventana.geometry('1200x600')
 etiqueta1 = Label(ventana,text="Algoritmos de multiplicación de matrices", font=("Arial",30))
 etiqueta2 = Label(ventana,text="Desarrollado por Jordan Gonzalez y Eduardo Gallegos", font=("Arial",20))
 etiqueta3 = Label(ventana,text="Dale click al botón para comenzar", font=("Arial",15))
