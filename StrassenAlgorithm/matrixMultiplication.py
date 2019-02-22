@@ -1,8 +1,5 @@
-# coded by duncanista / Jordan Gonzalez
-#          eduardogallegos / Eduardo Gallegos
-
 from tkinter import *
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 
 def getMatrix(path):
     file = open(path, 'r').read().splitlines()
@@ -44,9 +41,9 @@ def strassenMethod(a,b):
     if(order <= 2):
         c = generateMatrix(order)
         for i in range(order):
-            for j in range(order):
-                for k in range(order):
-                    c[i][k] += a[i][j] * b[j][k]
+            for k in range(order):
+                for j in range(order):
+                    c[i][j] += a[i][k] * b[k][j]
         return c
     else:
         # dividing matrixC
@@ -100,38 +97,44 @@ def strassenMethod(a,b):
 def bookMethod(a,b):
     c = generateMatrix(getMatrixOrder(a))
     for i in range(getMatrixOrder(a)):
-        for j in range(len(b[0])):
-            for k in range(len(b[0])):
-                c[i][k] += a[i][j] * b[j][k]
+        for k in range(len(b[0])):
+            for j in range(len(b[0])):
+                c[i][j] += a[i][k] * b[k][j]
     return c
-
-def actionButton():
-    multiplications()
-    #closeWindow()
 
 def multiplications():
     file1 = filedialog.askopenfilename(filetypes=(("Text files", "*.txt"), ("all files", "*.*")))
     file2 = filedialog.askopenfilename(filetypes=(("Text files","*.txt"),("all files","*.*")))
-    #messagebox.showinfo("Resultado", "El resultado se muestra en consola")
     m1 = getMatrix(file1)
     m2 = getMatrix(file2)
-
     if (getMatrixOrder(m1) == len(m2[0])):
+        closeWindow()
         print(toString(strassenMethod(m1, m2)))
         print(toString(bookMethod(m1,m2)))
-        etiqueta6 = Label(ventana, text=toString(strassenMethod(m1, m2)))
-        etiqueta7 = Label(ventana, text="En la consola se muestran los dos procesos por ambos métodos, strassen y textbook")
-        etiqueta6.grid(column=0, row=6)
-        etiqueta7.grid(column=0, row=8)
+        if(getMatrixOrder(m1)<65):
+            ventana2 = Tk()
+            ventana2.title("Resultados")
+            ventana2.geometry('760x600')
+            etiqueta6 = Label(ventana2, text="Resultado con el algoritmo de Strassen")
+            etiqueta7 = Label(ventana2, text=toString(strassenMethod(m1, m2)))
+            etiqueta8 = Label(ventana2, text="Resultado con el algoritmo de definición de multiplicación de matrices")
+            etiqueta9 = Label(ventana2, text=toString(bookMethod(m1, m2)))
+            etiqueta6.grid(column=0, row=1)
+            etiqueta7.grid(column=0, row=2)
+            etiqueta8.grid(column=0, row=3)
+            etiqueta9.grid(column=0, row=4)
+            ventana2.mainloop()
     else:
         print("Te equivocaste, ingresa matrices del mismo tamaño")
+        messagebox.showerror('Error','Las matrices son de distintos tamaños')
+        closeWindow()
 
 def closeWindow():
     ventana.destroy()
 
 ventana = Tk()
 ventana.title("Multiplicación de matrices")
-ventana.geometry('1200x600')
+ventana.geometry('750x600')
 etiqueta1 = Label(ventana,text="Algoritmos de multiplicación de matrices", font=("Arial",30))
 etiqueta2 = Label(ventana,text="Desarrollado por Jordan Gonzalez y Eduardo Gallegos", font=("Arial",20))
 etiqueta3 = Label(ventana,text="Dale click al botón para comenzar", font=("Arial",15))
@@ -139,7 +142,7 @@ etiqueta4 = Label(ventana,text="Escoge las dos matrices a multiplicar en formato
 etiqueta5 = Label(ventana,text="Y deja que el programa haga el resto", font=("Arial", 15))
 #btn1 = Button(ventana, text="Escoge la primer matriz", command=chooseFile1)
 #btn2 = Button(ventana, text="Escoge la segunda matriz ", command=chooseFile2)
-btn3 = Button(ventana, text="Hacer las multiplicaciones", command=actionButton)
+btn3 = Button(ventana, text="Hacer las multiplicaciones", command=multiplications)
 etiqueta1.grid(column=0, row=0)
 etiqueta2.grid(column=0,row=1)
 etiqueta3.grid(column=0, row=2)
