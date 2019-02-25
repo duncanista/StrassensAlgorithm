@@ -1,5 +1,7 @@
 from tkinter import *
 from tkinter import filedialog, messagebox
+numStrassen = 0
+numDef = 0
 
 def getMatrix(path):
     file = open(path, 'r').read().splitlines()
@@ -37,6 +39,8 @@ def toString(matrix):
     return s
 
 def strassenMethod(a,b):
+    global numStrassen
+    numStrassen += 1
     order = getMatrixOrder(a)
     if(order <= 2):
         c = generateMatrix(order)
@@ -95,11 +99,14 @@ def strassenMethod(a,b):
         return c
 
 def bookMethod(a,b):
+    global numDef
     c = generateMatrix(getMatrixOrder(a))
     for i in range(getMatrixOrder(a)):
         for k in range(len(b[0])):
             for j in range(len(b[0])):
                 c[i][j] += a[i][k] * b[k][j]
+                numDef +=1
+
     return c
 
 def multiplications():
@@ -119,10 +126,14 @@ def multiplications():
             etiqueta7 = Label(ventana2, text=toString(strassenMethod(m1, m2)))
             etiqueta8 = Label(ventana2, text="Resultado con el algoritmo de definición de multiplicación de matrices")
             etiqueta9 = Label(ventana2, text=toString(bookMethod(m1, m2)))
+            etiqueta10 = Label(ventana2, text="Multiplicaciones Strassen: " + str(numStrassen))
+            etiqueta11 = Label(ventana2, text="Multiplicationes A. de Definición: " + str(numDef))
             etiqueta6.grid(column=0, row=1)
             etiqueta7.grid(column=0, row=2)
             etiqueta8.grid(column=0, row=3)
             etiqueta9.grid(column=0, row=4)
+            etiqueta10.grid(column=0, row=5)
+            etiqueta11.grid(column=0, row=6)
             ventana2.mainloop()
     else:
         print("Te equivocaste, ingresa matrices del mismo tamaño")
@@ -131,6 +142,7 @@ def multiplications():
 
 def closeWindow():
     ventana.destroy()
+
 
 ventana = Tk()
 ventana.title("Multiplicación de matrices")
