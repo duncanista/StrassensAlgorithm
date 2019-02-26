@@ -40,7 +40,7 @@ def toString(matrix):
 
 def strassenMethod(a,b):
     global numStrassen
-    numStrassen += 1
+
     order = getMatrixOrder(a)
     if(order <= 2):
         c = generateMatrix(order)
@@ -48,8 +48,10 @@ def strassenMethod(a,b):
             for k in range(order):
                 for j in range(order):
                     c[i][j] += a[i][k] * b[k][j]
+                    numStrassen += 1
         return c
     else:
+        numStrassen += 7
         # dividing matrixC
         size = int(order/2)
         # this for A matrix
@@ -106,7 +108,6 @@ def bookMethod(a,b):
             for j in range(len(b[0])):
                 c[i][j] += a[i][k] * b[k][j]
                 numDef +=1
-
     return c
 
 def multiplications():
@@ -116,16 +117,18 @@ def multiplications():
     m2 = getMatrix(file2)
     if (getMatrixOrder(m1) == len(m2[0])):
         closeWindow()
-        print(toString(strassenMethod(m1, m2)))
-        print(toString(bookMethod(m1,m2)))
+        c1 = strassenMethod(m1, m2)
+        c2 = bookMethod(m1,m2)
+        print(toString(c1))
+        print(toString(c2))
         if(getMatrixOrder(m1)<65):
             ventana2 = Tk()
             ventana2.title("Resultados")
             ventana2.geometry('760x600')
             etiqueta6 = Label(ventana2, text="Resultado con el algoritmo de Strassen")
-            etiqueta7 = Label(ventana2, text=toString(strassenMethod(m1, m2)))
+            etiqueta7 = Label(ventana2, text=toString(c1))
             etiqueta8 = Label(ventana2, text="Resultado con el algoritmo de definición de multiplicación de matrices")
-            etiqueta9 = Label(ventana2, text=toString(bookMethod(m1, m2)))
+            etiqueta9 = Label(ventana2, text=toString(c2))
             etiqueta10 = Label(ventana2, text="Multiplicaciones Strassen: " + str(numStrassen))
             etiqueta11 = Label(ventana2, text="Multiplicationes A. de Definición: " + str(numDef))
             etiqueta6.grid(column=0, row=1)
