@@ -1,2 +1,2 @@
-# Strassens Algorithm
+# Strassen's Algorithm
 Python algorithm that calculates matrices with order 2^n
